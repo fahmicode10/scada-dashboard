@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCADA Web Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* Animasi berkedip untuk alarm */
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+        .animate-pulse {
+            animation: pulse 1s infinite;
+        }
+    </style>
+</head>
+<body class="bg-dark text-light">
+
+    <nav class="navbar navbar-dark bg-secondary shadow-sm mb-4">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">🏭 SCADA SYSTEM MONITORING</span>
+            <span class="badge bg-success text-white" id="system-status">SYSTEM OK</span>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row text-center g-4">
+            
+            <div class="col-md-4">
+                <div class="card bg-secondary text-light border-0 shadow" id="card-temp">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold" style="color: #ffbf00;">TEMPERATURE</h5>
+                        <h2 class="display-4 fw-bold"><span id="val-temperature">0.0</span> °C</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card bg-secondary text-light border-0 shadow" id="card-press">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold" style="color: #04eeff;">PRESSURE</h5>
+                        <h2 class="display-4 fw-bold"><span id="val-pressure">0.0</span> Bar</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card bg-secondary text-light border-0 shadow" id="card-level">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold" style="color: #39ff14;">TANK LEVEL</h5>
+                        <h2 class="display-4 fw-bold"><span id="val-level">0.0</span> %</h2>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="text-center mt-4 text-muted">
+            <small>Last Update: <span id="val-timestamp">-</span></small>
+        </div>
+    </div>
+
+    <div class="text-center mt-4 text-muted">
+        <small>Last Update: <span id="val-timestamp">-</span></small>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <div class="card bg-secondary text-light border-0 shadow">
+                <div class="card-body">
+                    <h5 class="card-title text-info mb-3">📈 REAL-TIME SENSOR TRENDS</h5>
+                    <div style="position: relative; height:300px">
+                        <canvas id="scadaChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <audio id="alarm-sound" src="{{ url_for('static', filename='alarm.mp3')}}" loop></audio>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
